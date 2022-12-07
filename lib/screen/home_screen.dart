@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:tmdb_http_assignment/models/tmdb_model.dart';
+import 'package:tmdb_http_assignment/screen/description_screen.dart';
 import 'package:tmdb_http_assignment/service/remote_service.dart';
 import '../models/text_model.dart';
 
@@ -45,7 +46,16 @@ class _MyHomePageState extends State<MyHomePage> {
         itemBuilder: ((context, index) {
           var data = tmdbModels?.results?[index];
           return InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DescriptionScreen(
+                    id: data.id!.toInt(),
+                  ),
+                ),
+              );
+            },
             child: Column(
               children: [
                 const SizedBox(
@@ -113,7 +123,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       textAlign: TextAlign.center,
                     ),
                     ModifiedText(
-                      text: data.releaseDate!.toString(),
+                      text:
+                          '${data.releaseDate!.day}/${data.releaseDate!.month}/${data.releaseDate!.year}',
                       color: Colors.grey,
                       size: 14,
                       textAlign: TextAlign.center,
