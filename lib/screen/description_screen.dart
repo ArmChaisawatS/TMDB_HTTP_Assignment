@@ -52,27 +52,24 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
           : ListView(
               children: [
                 Container(
-                  height: 1000,
-                  padding: const EdgeInsets.all(0),
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        child: Opacity(
-                          opacity: 0.5,
-                          child: Image.network(
-                            detailModels?.backdropPath == null
-                                ? url + detailModels!.posterPath.toString()
-                                : url + detailModels!.backdropPath.toString(),
-                            fit: BoxFit.fitHeight,
-                            height: 650,
-                          ),
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.zero,
+                    image: DecorationImage(
+                        opacity: 0.5,
+                        image: NetworkImage(
+                          detailModels?.backdropPath == null
+                              ? url + detailModels!.posterPath.toString()
+                              : url + detailModels!.backdropPath.toString(),
                         ),
-                      ),
-                      Positioned(
-                        left: 90,
-                        top: 30,
+                        fit: BoxFit.cover),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Center(
                         child: Container(
-                          padding: EdgeInsets.zero,
                           height: 350,
                           width: 235,
                           decoration: BoxDecoration(
@@ -85,83 +82,97 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                           ),
                         ),
                       ),
-                      Positioned(
-                        top: 460,
-                        left: 20,
-                        child: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: Colors.black,
-                          ),
-                          padding: const EdgeInsets.all(0),
-                          child: CircularPercentIndicator(
-                            animation: true,
-                            animationDuration: 1000,
-                            backgroundColor: Colors.white,
-                            center: ModifiedText(
-                              text: '${(getvote! * 10).toStringAsFixed(0)}%',
-                              color: Colors.white,
-                              size: 16,
-                              textAlign: TextAlign.start,
-                            ),
-                            radius: 18,
-                            lineWidth: 2.0,
-                            percent: getvote / 10,
-                            progressColor: Colors.green,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        width: 400,
-                        top: 390,
-                        child: Container(
-                          padding: const EdgeInsets.all(0),
-                          child: ModifiedText(
-                            text: detailModels?.title ?? 'NOT Loaded',
-                            color: Colors.white,
-                            size: 22,
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: 110,
-                        top: 420,
-                        child: Container(
-                          padding: const EdgeInsets.all(0),
-                          child: ModifiedText(
-                            text:
-                                'Releasing On - ${getdate!.day}/${getdate.month}/${getdate.year}',
-                            color: Colors.white,
-                            size: 16,
-                            textAlign: TextAlign.start,
-                          ),
-                        ),
-                      ),
-                      const Positioned(
-                        left: 12,
-                        top: 500,
+                      Center(
                         child: ModifiedText(
-                          text: 'Overview',
+                          text: '${detailModels?.title} (${getdate!.year})',
                           color: Colors.white,
-                          size: 24,
+                          size: 28,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      Center(
+                        child: ModifiedText(
+                          text:
+                              'Releasing On - ${getdate.day}/${getdate.month}/${getdate.year} (${detailModels!.originalLanguage})',
+                          color: Colors.white,
+                          size: 18,
                           textAlign: TextAlign.start,
                         ),
                       ),
-                      Positioned(
-                        top: 530,
-                        child: Container(
-                          width: 400,
-                          padding: const EdgeInsets.all(12),
-                          child: ModifiedText(
-                            text: '${detailModels?.overview}',
-                            color: Colors.white,
-                            size: 18,
-                            textAlign: TextAlign.start,
-                          ),
+                      Center(
+                        child: ModifiedText(
+                          text: ' ${detailModels!.runtime} min',
+                          color: Colors.white,
+                          size: 18,
+                          textAlign: TextAlign.start,
                         ),
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            height: 55,
+                            width: 55,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: Colors.black,
+                            ),
+                            padding: const EdgeInsets.all(0),
+                            child: CircularPercentIndicator(
+                              animation: true,
+                              animationDuration: 1000,
+                              backgroundColor: Colors.white,
+                              center: ModifiedText(
+                                text: '${(getvote! * 10).toStringAsFixed(0)}%',
+                                color: Colors.white,
+                                size: 18,
+                                textAlign: TextAlign.start,
+                              ),
+                              radius: 24,
+                              lineWidth: 3.0,
+                              percent: getvote / 10,
+                              progressColor: Colors.green,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              ModifiedText(
+                                  text: 'User',
+                                  color: Colors.white,
+                                  size: 18,
+                                  textAlign: TextAlign.start),
+                              ModifiedText(
+                                  text: 'Score',
+                                  color: Colors.white,
+                                  size: 18,
+                                  textAlign: TextAlign.start),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      ModifiedText(
+                        text: '${detailModels?.tagline}',
+                        color: Colors.grey,
+                        size: 20,
+                        textAlign: TextAlign.start,
+                      ),
+                      const ModifiedText(
+                        text: 'Overview',
+                        color: Colors.white,
+                        size: 28,
+                        textAlign: TextAlign.start,
+                      ),
+                      ModifiedText(
+                        text: '${detailModels?.overview}',
+                        color: Colors.white,
+                        size: 20,
+                        textAlign: TextAlign.start,
                       ),
                     ],
                   ),
