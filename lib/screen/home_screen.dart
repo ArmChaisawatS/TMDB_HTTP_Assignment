@@ -4,7 +4,6 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:tmdb_http_assignment/models/tmdb_model.dart';
 import 'package:tmdb_http_assignment/screen/description_screen.dart';
 import 'package:tmdb_http_assignment/service/remote_service.dart';
-import '../models/text_model.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({
@@ -49,11 +48,13 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: isLoading
           ? const Center(
-              child: Text('Loading'),
+              child: CircularProgressIndicator(),
             )
           : GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, childAspectRatio: 0.57),
+                crossAxisCount: 2,
+                childAspectRatio: 0.57,
+              ),
               itemCount: tmdbModels?.results?.length ?? 0,
               itemBuilder: ((context, index) {
                 var data = tmdbModels?.results?[index];
@@ -93,19 +94,20 @@ class _MyHomePageState extends State<MyHomePage> {
                               height: 35,
                               width: 35,
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                  color: Colors.black),
+                                borderRadius: BorderRadius.circular(30),
+                                color: Colors.black,
+                              ),
                               child: CircularPercentIndicator(
                                 backgroundColor: Colors.white,
                                 animation: true,
                                 animationDuration: 1000,
                                 progressColor: Colors.green,
-                                center: ModifiedText(
-                                  text:
-                                      '${(data.voteAverage!.toDouble() * 10).toStringAsFixed(0)} %',
-                                  color: Colors.white,
-                                  size: 12,
-                                  textAlign: TextAlign.center,
+                                center: Text(
+                                  '${(data.voteAverage!.toDouble() * 10).toStringAsFixed(0)} %',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                  ),
                                 ),
                                 radius: 16,
                                 lineWidth: 2.0,
@@ -118,18 +120,20 @@ class _MyHomePageState extends State<MyHomePage> {
                       Expanded(
                         child: Column(
                           children: [
-                            ModifiedText(
-                              text: data.title.toString(),
-                              color: Colors.black,
-                              size: 16,
+                            Text(
+                              data.title.toString(),
                               textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                              ),
                             ),
-                            ModifiedText(
-                              text:
-                                  '${data.releaseDate!.day}/${data.releaseDate!.month}/${data.releaseDate!.year}',
-                              color: Colors.grey,
-                              size: 14,
-                              textAlign: TextAlign.center,
+                            Text(
+                              '${data.releaseDate!.day}/${data.releaseDate!.month}/${data.releaseDate!.year}',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                              ),
                             ),
                           ],
                         ),
