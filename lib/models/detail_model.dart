@@ -1,16 +1,16 @@
 // To parse this JSON data, do
 //
-//     final detailModels = detailModelsFromJson(jsonString);
+//     final DetailModel = DetailModelFromJson(jsonString);
 
 import 'dart:convert';
 
-DetailModels detailModelsFromJson(String str) =>
-    DetailModels.fromJson(json.decode(str));
+DetailModel detailModelFromJson(String str) =>
+    DetailModel.fromJson(json.decode(str));
 
-String detailModelsToJson(DetailModels data) => json.encode(data.toJson());
+String detailModelToJson(DetailModel data) => json.encode(data.toJson());
 
-class DetailModels {
-  DetailModels({
+class DetailModel {
+  DetailModel({
     this.adult,
     this.backdropPath,
     this.belongsToCollection,
@@ -64,7 +64,7 @@ class DetailModels {
   double? voteAverage;
   int? voteCount;
 
-  factory DetailModels.fromJson(Map<String, dynamic> json) => DetailModels(
+  factory DetailModel.fromJson(Map<String, dynamic> json) => DetailModel(
         adult: json["adult"],
         backdropPath: json["backdrop_path"],
         belongsToCollection: json["belongs_to_collection"],
@@ -128,6 +128,12 @@ class DetailModels {
         "vote_average": voteAverage,
         "vote_count": voteCount,
       };
+
+  double getVoteAverage() {
+    double vote;
+    vote = voteAverage! / 10;
+    return vote;
+  }
 }
 
 class Genre {

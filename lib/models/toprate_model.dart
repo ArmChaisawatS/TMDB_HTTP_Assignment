@@ -1,16 +1,16 @@
 // To parse this JSON data, do
 //
-//     final tmdbModels = tmdbModelsFromJson(jsonString);
+//     final topRateModel = topRateModelFromJson(jsonString);
 
 import 'dart:convert';
 
-TmdbModels tmdbModelsFromJson(String str) =>
-    TmdbModels.fromJson(json.decode(str));
+TopRateModel topRateModelFromJson(String str) =>
+    TopRateModel.fromJson(json.decode(str));
 
-String tmdbModelsToJson(TmdbModels data) => json.encode(data.toJson());
+String topRateModelToJson(TopRateModel data) => json.encode(data.toJson());
 
-class TmdbModels {
-  TmdbModels({
+class TopRateModel {
+  TopRateModel({
     this.page,
     this.results,
     this.totalPages,
@@ -22,7 +22,7 @@ class TmdbModels {
   int? totalPages;
   int? totalResults;
 
-  factory TmdbModels.fromJson(Map<String, dynamic> json) => TmdbModels(
+  factory TopRateModel.fromJson(Map<String, dynamic> json) => TopRateModel(
         page: json["page"],
         results:
             List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
@@ -73,7 +73,7 @@ class Result {
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
         adult: json["adult"],
-        backdropPath: json["backdrop_path"] ?? json["poster_path"],
+        backdropPath: json["backdrop_path"],
         genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
         id: json["id"],
         originalLanguage: json["original_language"],
@@ -90,7 +90,7 @@ class Result {
 
   Map<String, dynamic> toJson() => {
         "adult": adult,
-        "backdrop_path": backdropPath ?? posterPath,
+        "backdrop_path": backdropPath,
         "genre_ids": List<dynamic>.from(genreIds!.map((x) => x)),
         "id": id,
         "original_language": originalLanguage,
@@ -99,10 +99,16 @@ class Result {
         "popularity": popularity,
         "poster_path": posterPath,
         "release_date":
-            "${releaseDate!.year.toString().padLeft(4, '0')}-${releaseDate!.month.toString().padLeft(2, '0')}-${releaseDate!.day.toString().padLeft(2, '0')}",
+            "${releaseDate?.year.toString().padLeft(4, '0')}-${releaseDate?.month.toString().padLeft(2, '0')}-${releaseDate?.day.toString().padLeft(2, '0')}",
         "title": title,
         "video": video,
         "vote_average": voteAverage,
         "vote_count": voteCount,
       };
+
+  double getVoteAverage() {
+    double vote;
+    vote = voteAverage! / 10;
+    return vote;
+  }
 }

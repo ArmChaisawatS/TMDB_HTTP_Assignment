@@ -16,7 +16,7 @@ class DescriptionScreen extends StatefulWidget {
 }
 
 class _DescriptionScreenState extends State<DescriptionScreen> {
-  DetailModels? detailModels;
+  DetailModel? detailModels;
   bool isLoading = false;
 
   @override
@@ -40,7 +40,6 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
   @override
   Widget build(BuildContext context) {
     String url = 'https://image.tmdb.org/t/p/w500';
-    var getvote = detailModels?.voteAverage;
     var getdate = detailModels?.releaseDate;
     return Scaffold(
       backgroundColor: Colors.black,
@@ -52,7 +51,6 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
               child: Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.zero,
                   image: DecorationImage(
                     opacity: 0.5,
                     image: NetworkImage(
@@ -131,7 +129,7 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                             animationDuration: 1000,
                             backgroundColor: Colors.white,
                             center: Text(
-                              '${(getvote! * 10).toStringAsFixed(0)}%',
+                              '${(detailModels!.getVoteAverage() * 100).toStringAsFixed(0)}%',
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
@@ -139,7 +137,7 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                             ),
                             radius: 24,
                             lineWidth: 3.0,
-                            percent: getvote / 10,
+                            percent: detailModels!.getVoteAverage(),
                             progressColor: Colors.green,
                           ),
                         ),
