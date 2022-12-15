@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tmdb_http_assignment/models/popular_model.dart';
+import 'package:tmdb_http_assignment/models/movie_model.dart';
 import 'package:tmdb_http_assignment/service/remote_service.dart';
 import 'package:tmdb_http_assignment/widgets/gridview_widget.dart';
 
@@ -11,8 +11,9 @@ class PopularScreen extends StatefulWidget {
 }
 
 class _PopularScreenState extends State<PopularScreen> {
-  PopularModel? popularModel;
+  MoviesModel? moviesModel;
   bool isLoading = false;
+  String keyword = "popular";
 
   @override
   void initState() {
@@ -22,8 +23,8 @@ class _PopularScreenState extends State<PopularScreen> {
 
   void getData() async {
     isLoading = true;
-    popularModel = await RemoteService().getPopularMovies();
-    if (popularModel != null) {
+    moviesModel = await RemoteService().getMovies(keyword);
+    if (moviesModel != null) {
       setState(
         () {
           isLoading = false;
@@ -40,7 +41,7 @@ class _PopularScreenState extends State<PopularScreen> {
               child: CircularProgressIndicator(),
             )
           : GridviewWidget(
-              model: popularModel,
+              model: moviesModel,
             ),
     );
   }

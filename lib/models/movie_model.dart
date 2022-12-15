@@ -1,16 +1,16 @@
 // To parse this JSON data, do
 //
-//     final topRateModel = topRateModelFromJson(jsonString);
+//     final MoviesModel = MoviesModelFromJson(jsonString);
 
 import 'dart:convert';
 
-TopRateModel topRateModelFromJson(String str) =>
-    TopRateModel.fromJson(json.decode(str));
+MoviesModel moviesModelFromJson(String str) =>
+    MoviesModel.fromJson(json.decode(str));
 
-String topRateModelToJson(TopRateModel data) => json.encode(data.toJson());
+String moviesModelToJson(MoviesModel data) => json.encode(data.toJson());
 
-class TopRateModel {
-  TopRateModel({
+class MoviesModel {
+  MoviesModel({
     this.page,
     this.results,
     this.totalPages,
@@ -22,7 +22,7 @@ class TopRateModel {
   int? totalPages;
   int? totalResults;
 
-  factory TopRateModel.fromJson(Map<String, dynamic> json) => TopRateModel(
+  factory MoviesModel.fromJson(Map<String, dynamic> json) => MoviesModel(
         page: json["page"],
         results:
             List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
@@ -60,7 +60,7 @@ class Result {
   String? backdropPath;
   List<int>? genreIds;
   int? id;
-  String? originalLanguage;
+  OriginalLanguage? originalLanguage;
   String? originalTitle;
   String? overview;
   double? popularity;
@@ -76,7 +76,8 @@ class Result {
         backdropPath: json["backdrop_path"],
         genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
         id: json["id"],
-        originalLanguage: json["original_language"],
+        originalLanguage:
+            originalLanguageValues.map?[json["original_language"]],
         originalTitle: json["original_title"],
         overview: json["overview"],
         popularity: json["popularity"].toDouble(),
@@ -93,7 +94,7 @@ class Result {
         "backdrop_path": backdropPath,
         "genre_ids": List<dynamic>.from(genreIds!.map((x) => x)),
         "id": id,
-        "original_language": originalLanguage,
+        "original_language": originalLanguageValues.reverse?[originalLanguage],
         "original_title": originalTitle,
         "overview": overview,
         "popularity": popularity,
@@ -110,5 +111,22 @@ class Result {
     double vote;
     vote = voteAverage! / 10;
     return vote;
+  }
+}
+
+enum OriginalLanguage { en, es }
+
+final originalLanguageValues =
+    EnumValues({"en": OriginalLanguage.en, "es": OriginalLanguage.es});
+
+class EnumValues<T> {
+  Map<String, T>? map;
+  Map<T, String>? reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String>? get reverse {
+    reverseMap ??= map?.map((k, v) => MapEntry(v, k));
+    return reverseMap;
   }
 }

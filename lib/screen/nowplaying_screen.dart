@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tmdb_http_assignment/models/nowplaying_model.dart';
+import 'package:tmdb_http_assignment/models/movie_model.dart';
 import 'package:tmdb_http_assignment/service/remote_service.dart';
 import 'package:tmdb_http_assignment/widgets/gridview_widget.dart';
 
@@ -11,8 +11,9 @@ class NowPlayingScreen extends StatefulWidget {
 }
 
 class _NowPlayingScreenState extends State<NowPlayingScreen> {
-  NowplayingModel? nowplayingModel;
+  MoviesModel? moviesModel;
   bool isLoading = false;
+  String keyword = "now_playing";
 
   @override
   void initState() {
@@ -22,8 +23,8 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
 
   void getData() async {
     isLoading = true;
-    nowplayingModel = await RemoteService().getNowPlayingMovies();
-    if (nowplayingModel != null) {
+    moviesModel = await RemoteService().getMovies(keyword);
+    if (moviesModel != null) {
       setState(
         () {
           isLoading = false;
@@ -40,7 +41,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
               child: CircularProgressIndicator(),
             )
           : GridviewWidget(
-              model: nowplayingModel,
+              model: moviesModel,
             ),
     );
   }

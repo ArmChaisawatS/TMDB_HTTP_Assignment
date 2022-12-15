@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tmdb_http_assignment/models/toprate_model.dart';
+import 'package:tmdb_http_assignment/models/movie_model.dart';
 import 'package:tmdb_http_assignment/service/remote_service.dart';
 import 'package:tmdb_http_assignment/widgets/gridview_widget.dart';
 
@@ -11,8 +11,9 @@ class TopRateScreen extends StatefulWidget {
 }
 
 class _TopRateScreenState extends State<TopRateScreen> {
-  TopRateModel? topRateModel;
+  MoviesModel? moviesModel;
   bool isLoading = false;
+  String keyword = "top_rated";
 
   @override
   void initState() {
@@ -22,8 +23,8 @@ class _TopRateScreenState extends State<TopRateScreen> {
 
   void getData() async {
     isLoading = true;
-    topRateModel = await RemoteService().getTopRateMovies();
-    if (topRateModel != null) {
+    moviesModel = await RemoteService().getMovies(keyword);
+    if (moviesModel != null) {
       setState(
         () {
           isLoading = false;
@@ -40,7 +41,7 @@ class _TopRateScreenState extends State<TopRateScreen> {
               child: CircularProgressIndicator(),
             )
           : GridviewWidget(
-              model: topRateModel,
+              model: moviesModel,
             ),
     );
   }
