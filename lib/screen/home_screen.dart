@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Tab(
                 icon: Icon(
-                  Icons.person,
+                  Icons.star_rate,
                   color: Colors.amber,
                 ),
                 child: Text('toprage'),
