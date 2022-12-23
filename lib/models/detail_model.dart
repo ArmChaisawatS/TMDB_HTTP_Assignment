@@ -134,6 +134,12 @@ class DetailModel {
     vote = voteAverage! / 10;
     return vote;
   }
+
+  String getVotePercent() {
+    String getVotePercent;
+    getVotePercent = (getVoteAverage() * 100).toStringAsFixed(0);
+    return getVotePercent;
+  }
 }
 
 class Genre {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:tmdb_http_assignment/constants/constant.dart';
 import 'package:tmdb_http_assignment/models/detail_model.dart';
 import 'package:tmdb_http_assignment/service/remote_service.dart';
 
@@ -39,7 +40,6 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String url = 'https://image.tmdb.org/t/p/w500';
     var getdate = detailModels?.releaseDate;
     return Scaffold(
       backgroundColor: Colors.black,
@@ -55,8 +55,9 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                     opacity: 0.5,
                     image: NetworkImage(
                       detailModels?.backdropPath == null
-                          ? url + detailModels!.posterPath.toString()
-                          : url + detailModels!.backdropPath.toString(),
+                          ? Constant.url + detailModels!.posterPath.toString()
+                          : Constant.url +
+                              detailModels!.backdropPath.toString(),
                     ),
                     fit: BoxFit.cover,
                   ),
@@ -76,7 +77,8 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                           borderRadius: BorderRadius.circular(30),
                           image: DecorationImage(
                             image: NetworkImage(
-                              url + detailModels!.posterPath.toString(),
+                              Constant.url +
+                                  detailModels!.posterPath.toString(),
                             ),
                           ),
                         ),
@@ -123,13 +125,12 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                             borderRadius: BorderRadius.circular(30),
                             color: Colors.black,
                           ),
-                          padding: const EdgeInsets.all(0),
                           child: CircularPercentIndicator(
                             animation: true,
                             animationDuration: 1000,
                             backgroundColor: Colors.white,
                             center: Text(
-                              '${(detailModels!.getVoteAverage() * 100).toStringAsFixed(0)}%',
+                              '${detailModels!.getVotePercent()}%',
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,

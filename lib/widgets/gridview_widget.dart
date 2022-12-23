@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:tmdb_http_assignment/constants/constant.dart';
 import 'package:tmdb_http_assignment/screen/description_screen.dart';
 
 class GridviewWidget extends StatelessWidget {
@@ -8,7 +9,6 @@ class GridviewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String url = 'https://image.tmdb.org/t/p/w500';
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
@@ -23,7 +23,7 @@ class GridviewWidget extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => DescriptionScreen(
-                  id: data.id!.toInt(),
+                  id: data.id,
                 ),
               ),
             );
@@ -32,16 +32,14 @@ class GridviewWidget extends StatelessWidget {
             children: [
               Stack(
                 children: [
-                  Positioned(
-                    child: Container(
-                      height: 290,
-                      width: 180,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(40),
-                        image: DecorationImage(
-                          image: NetworkImage(
-                            url + data!.posterPath.toString(),
-                          ),
+                  Container(
+                    height: 290,
+                    width: 180,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(40),
+                      image: DecorationImage(
+                        image: NetworkImage(
+                          Constant.url + data!.posterPath.toString(),
                         ),
                       ),
                     ),
@@ -62,7 +60,7 @@ class GridviewWidget extends StatelessWidget {
                         animationDuration: 1000,
                         progressColor: Colors.green,
                         center: Text(
-                          '${(data.getVoteAverage() * 100).toStringAsFixed(0)} %',
+                          '${data.getVotePercent()} %',
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 12,

@@ -108,9 +108,15 @@ class Result {
       };
 
   double getVoteAverage() {
-    double vote;
-    vote = voteAverage! / 10;
-    return vote;
+    double getvoteAverage;
+    getvoteAverage = voteAverage! / 10;
+    return getvoteAverage;
+  }
+
+  String getVotePercent() {
+    String getVotePercent;
+    getVotePercent = (getVoteAverage() * 100).toStringAsFixed(0);
+    return getVotePercent;
   }
 }
 

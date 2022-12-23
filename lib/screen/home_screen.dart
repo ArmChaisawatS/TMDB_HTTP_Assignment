@@ -21,7 +21,7 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
         appBar: AppBar(
           title: SvgPicture.asset(
-            'assets/images/logo.svg',
+            'assets/images/logo-optimized.svg',
             height: 15,
           ),
           bottom: const TabBar(
@@ -31,21 +31,21 @@ class _MyHomePageState extends State<MyHomePage> {
                   Icons.timer_outlined,
                   color: Colors.blue,
                 ),
-                child: Text('nowplaying'),
+                child: Text('Now playing'),
               ),
               Tab(
                 icon: Icon(
                   Icons.person,
                   color: Colors.purple,
                 ),
-                child: Text('popular'),
+                child: Text('Popular'),
               ),
               Tab(
                 icon: Icon(
                   Icons.star_rate,
                   color: Colors.amber,
                 ),
-                child: Text('toprage'),
+                child: Text('Top Raged'),
               ),
             ],
           ),
